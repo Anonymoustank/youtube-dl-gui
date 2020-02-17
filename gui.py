@@ -1,17 +1,11 @@
 import tkinter
 from tkinter.simpledialog import askstring
+import os
 
-root = tkinter.Tk()
+def Video_Download(): #Video formats are mp4, webm
 
-root.withdraw()
-
-link = askstring("Link to the video", "Enter the link to the youtube video:")
-
-def Video_Download():
-	print("hi")
-
-def Audio_Download():
-	print("hola")
+def Audio_Download(): #Audio formats are mp3, m4a
+	
 
 def initialize():
 
@@ -21,18 +15,36 @@ def initialize():
 
 	root.deiconify()
 
-	video_option = tkinter.Button(root, text = "Download video", command = Video_Download)
+	video_option = tkinter.Button(root, text = "Download video", command = lambda:[back_button.destroy(), sound_option.destroy(), video_option.destroy(), Video_Download()])
 	
 	video_option.pack()
 
-	sound_option = tkinter.Button(root, text = "Download audio", command = Audio_Download)
+	sound_option = tkinter.Button(root, text = "Download audio", command = lambda:[back_button.destroy(), sound_option.destroy(), video_option.destroy(), Audio_Download()])
 
 	sound_option.pack()
+
+	back_button = tkinter.Button(root, text = "Back", command = lambda:[root.destroy(),ask_link()])
+
+	back_button.pack()
+
+def ask_link():
+	global root
+	root = tkinter.Tk()
+
+	root.withdraw()
+
+	link = askstring("Link to the video", "Enter the link to the youtube video:")
+
+	download = askstring("Enter your preferred download location:", "Enter your preferred download location:")
+
+	os.system("cd " + download)
+
+	initialize()
 	
 
 
 
 
 
-initialize()
+ask_link()
 root.mainloop()
