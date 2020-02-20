@@ -6,6 +6,7 @@ import subprocess
 
 def out(command):
     arch = subprocess.check_output(str(command), shell=True)
+    
 
 def Video_Download(): #Video formats are mp4, webm
 	clicked = StringVar(root)
@@ -24,7 +25,7 @@ def Video_Download(): #Video formats are mp4, webm
 	
 	back_button.pack()
 
-	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link)]) #Figure out how to stop back button from automatically executing command
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download)]) #Ask user what they want to name the file
 
 	start_button.pack()
 
@@ -45,7 +46,7 @@ def Audio_Download(): #Audio formats are mp3, m4a
 	
 	back_button.pack()
 
-	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link)]) #Figure out how to stop back button from automatically executing command
+	start_button = Button(root, text = "Start Download", command = lambda:[os.system("cd " + download),out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download)]) #Ask user what they want to name the file
 
 	start_button.pack()
 
@@ -71,6 +72,7 @@ def initialize():
 def ask_link():
 	global root
 	global link
+	global download
 	root = Tk()
 
 	root.withdraw()
@@ -79,9 +81,6 @@ def ask_link():
 
 	download = askstring("Enter your preferred download location:", "Enter your preferred download location:")
 
-	while os.system("cd " + download) != 0:
-		download = askstring("Enter your preferred download location:", "Please enter a location exists and you have access to")
-	
 	initialize()
 	
 
