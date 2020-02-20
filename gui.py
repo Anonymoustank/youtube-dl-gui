@@ -1,12 +1,15 @@
 from tkinter import *
 from tkinter.simpledialog import askstring
 import time
-import subprocess
 import os
+import subprocess
+
+def out(command):
+    arch = subprocess.check_output(str(command), shell=True)
 
 def Video_Download(): #Video formats are mp4, webm
-	clicked = StringVar(root) 
-	#Add a back button here and at Audio_Download()
+	clicked = StringVar(root)
+	
 	clicked.set("mp4")
 
 	menu = OptionMenu(root, clicked, "mp4", "webm")
@@ -20,6 +23,10 @@ def Video_Download(): #Video formats are mp4, webm
 	back_button = Button(root, text = "Back", command = lambda:[menu_label.destroy(), menu.destroy(), back_button.destroy(), initialize()])
 	
 	back_button.pack()
+
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link)]) #Figure out how to stop back button from automatically executing command
+
+	start_button.pack()
 
 def Audio_Download(): #Audio formats are mp3, m4a
 	clicked = StringVar(root)
@@ -37,6 +44,10 @@ def Audio_Download(): #Audio formats are mp3, m4a
 	back_button = Button(root, text = "Back", command = lambda:[menu_label.destroy(), menu.destroy(), back_button.destroy(), initialize()])
 	
 	back_button.pack()
+
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link)]) #Figure out how to stop back button from automatically executing command
+
+	start_button.pack()
 
 def initialize():
 	root.title("Youtube-dl GUI")
@@ -59,6 +70,7 @@ def initialize():
 
 def ask_link():
 	global root
+	global link
 	root = Tk()
 
 	root.withdraw()
