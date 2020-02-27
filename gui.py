@@ -17,7 +17,7 @@ def Video_Download(): #Video formats are mp4, webm
 
 	menu.pack()
 
-	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download + "/%(title)s.%(ext)s")]) #Ask quotes to download and what comes after
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Ask quotes to download and what comes after
 
 	start_button.pack()
 
@@ -28,13 +28,13 @@ def Video_Download(): #Video formats are mp4, webm
 def Audio_Download(): #Audio formats are mp3, m4a
 	clicked = StringVar(root)
 
-	clicked.set("mp3")
+	clicked.set("m4a")
 
-	menu = OptionMenu(root, clicked, "mp3", "m4a")
+	menu = OptionMenu(root, clicked, "m4a", "mp3")
 
 	menu.pack()
 
-	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download + "/%(title)s.%(ext)s")]) #Add quotes to download and what comes after
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Add quotes to download and what comes after
 
 	start_button.pack()
 
@@ -65,6 +65,7 @@ def ask_link():
 	global root
 	global link
 	global download
+	global file_name
 	root = Tk()
 
 	root.withdraw()
@@ -74,7 +75,8 @@ def ask_link():
 	download = askstring("Enter your preferred download location:", "Enter your preferred download location:")
 
 	while os.system("cd " + download) != 0:
-            download = askstring("Entered your preferred download location:", "Enter a location that exists and you have access to:") + "%(title)s.%(ext)s"
+		download = askstring("Entered your preferred download location:", "Enter a location that exists and you have access to:")
+	file_name = askstring("File Name? ", "File Name? ")  
 	initialize()
 	
         
