@@ -5,7 +5,7 @@ import os
 import subprocess
 
 def out(command):
-    arch = subprocess.check_output(str(command), shell=True)
+        arch = subprocess.check_output(str(command), shell=True)
     
 
 def Video_Download(): #Video formats are mp4, webm
@@ -17,17 +17,13 @@ def Video_Download(): #Video formats are mp4, webm
 
 	menu.pack()
 
-	menu_label = Label(text = "Select what format you want to save your video as", font = ('Helvetica', 12), fg ='black')
-
-	menu_label.pack()
-
-	back_button = Button(root, text = "Back", command = lambda:[menu_label.destroy(), menu.destroy(), back_button.destroy(), initialize()])
-	
-	back_button.pack()
-
-	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download)]) #Ask user what they want to name the file
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download + "/%(title)s.%(ext)s")]) #Ask quotes to download and what comes after
 
 	start_button.pack()
+
+	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), initialize()])
+	
+	back_button.place(x=0,y=0)
 
 def Audio_Download(): #Audio formats are mp3, m4a
 	clicked = StringVar(root)
@@ -38,17 +34,13 @@ def Audio_Download(): #Audio formats are mp3, m4a
 
 	menu.pack()
 
-	menu_label = Label(text = "Select what format you want to save your audio as", font = ('Helvetica', 12), fg ='black')
-
-	menu_label.pack()
-
-	back_button = Button(root, text = "Back", command = lambda:[menu_label.destroy(), menu.destroy(), back_button.destroy(), initialize()])
-	
-	back_button.pack()
-
-	start_button = Button(root, text = "Start Download", command = lambda:[os.system("cd " + download),out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download)]) #Ask user what they want to name the file
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f " + clicked.get() + " " + link + " -o " + download + "/%(title)s.%(ext)s")]) #Add quotes to download and what comes after
 
 	start_button.pack()
+
+	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), initialize()])
+	
+	back_button.place(x=0,y=0)
 
 def initialize():
 	root.title("Youtube-dl GUI")
@@ -67,7 +59,7 @@ def initialize():
 
 	back_button = Button(root, text = "Back", command = lambda:[root.destroy(),ask_link()])
 
-	back_button.pack()
+	back_button.place(x=0,y=0)
 
 def ask_link():
 	global root
@@ -81,9 +73,11 @@ def ask_link():
 
 	download = askstring("Enter your preferred download location:", "Enter your preferred download location:")
 
+	while os.system("cd " + download) != 0:
+            download = askstring("Entered your preferred download location:", "Enter a location that exists and you have access to:") + "%(title)s.%(ext)s"
 	initialize()
 	
-
+        
 
 ask_link()
 root.mainloop()
