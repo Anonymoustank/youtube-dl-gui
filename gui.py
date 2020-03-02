@@ -5,8 +5,12 @@ import os
 import subprocess
 
 def out(command):
-        arch = subprocess.check_output(str(command), shell=True)
-    
+        try:
+                arch = subprocess.check_output(str(command), shell=True)
+        except:
+                print("")
+        else:
+                print("Download completed successfully!")
 
 def Video_Download(): #Video formats are mp4, webm
 	clicked = StringVar(root)
