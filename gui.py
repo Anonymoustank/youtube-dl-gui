@@ -1,16 +1,17 @@
 from tkinter import *
 from tkinter.simpledialog import askstring
-import time
 import os
-import subprocess
+import time
+from subprocess import PIPE, run
 
 def out(command):
-        try:
-                arch = subprocess.check_output(str(command), shell=True)
-        except:
-                print("")
-        else:
-                print("Download completed successfully!")
+        result = run(command, shell=True, capture_output=True, universal_newlines=True)
+        time.sleep(2)
+        print(result.stderr)
+        print(result.stdout)
+                
+        
+        
 
 def Video_Download(): #Video formats are mp4, webm
 	clicked = StringVar(root)
