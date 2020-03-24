@@ -4,11 +4,38 @@ import os
 import time
 from subprocess import PIPE, run
 
+times_ran = 0
+
+error_label = None
+
+result_label = None
+
 def out(command):
+        global times_ran
+        
+        global error_label
+
+        global result_label
+        
+        if times_ran > 0:
+                
+                error_label.destroy()
+                
+                result_label.destroy()
+                
         result = run(command, shell=True, capture_output=True, universal_newlines=True)
+        
         time.sleep(2)
-        print(result.stderr)
-        print(result.stdout)
+        
+        error_label = Label(root,text=str(result.stderr))
+        
+        error_label.pack()
+        
+        result_label = Label(root,text=str(result.stdout))
+
+        result_label.pack()
+
+        times_ran = times_ran + 1
                 
         
         
@@ -26,7 +53,7 @@ def Video_Download(): #Video formats are mp4, webm
 
 	start_button.pack()
 
-	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), initialize()])
+	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), error_label.destroy(), result_label.destroy(), initialize()])
 	
 	back_button.place(x=0,y=0)
 
@@ -43,7 +70,7 @@ def Audio_Download(): #Audio formats are mp3, m4a
 
 	start_button.pack()
 
-	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), initialize()])
+	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), error_label.destroy(), result_label.destroy(), initialize()])
 	
 	back_button.place(x=0,y=0)
 
