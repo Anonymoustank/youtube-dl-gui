@@ -49,7 +49,7 @@ def Video_Download(): #Video formats are mp4, webm
 
 	menu.pack()
 
-	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f -q " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Ask quotes to download and what comes after
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -q -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Ask quotes to download and what comes after
 
 	start_button.pack()
 
@@ -66,7 +66,7 @@ def Audio_Download(): #Audio formats are mp3, m4a
 
 	menu.pack()
 
-	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -f -q " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Add quotes to download and what comes after
+	start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -q -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Add quotes to download and what comes after
 
 	start_button.pack()
 
