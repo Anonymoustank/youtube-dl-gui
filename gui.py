@@ -4,48 +4,29 @@ import os
 import time
 from subprocess import PIPE, run
 
-times_ran = 0
-
-error_label = None
-
-result_label = None
-
 def out(command):
-        global times_ran
         
-        global error_label
-
-        global result_label
-
-        if times_ran > 0:
-                
-                error_label.destroy()
-                
-                result_label.destroy()
-                
         result = run(command, shell=True, capture_output=True, universal_newlines=True)
 
-        error_label = Label(root,text=str(result.stderr))
+        complete = Tk()
+
+        complete.title("Download Results")
+
+        error_label = Label(complete,text=str(result.stderr))
         
         error_label.pack()
         
-        result_label = Label(root,text=str(result.stdout))
+        result_label = Label(complete,text=str(result.stdout))
 
         result_label.pack()
 
-        success_notify = Label(root,text="Download completed successfully!")
+        success_notify = Label(complete,text="Download completed successfully!")
 
         print(result.returncode)
 
         if str(result.returncode) == "0":
 
                 success_notify.pack()
-                
-        times_ran = times_ran + 1
-
-        time.sleep(2.5)
-
-        success_notify.destroy()
                 
         
         
