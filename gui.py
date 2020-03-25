@@ -25,7 +25,9 @@ def out(command):
                 
         result = run(command, shell=True, capture_output=True, universal_newlines=True)
         
-        time.sleep(2)
+        start_notify = Label(root,text="Download started")
+	
+	start_notify.pack()
         
         error_label = Label(root,text=str(result.stderr))
         
@@ -34,6 +36,13 @@ def out(command):
         result_label = Label(root,text=str(result.stdout))
 
         result_label.pack()
+	
+	if result.returncode == 0:
+		start_notify.destroy()
+		
+		success_notify = Label(root,text="Download completed successfully")
+		
+		success_notify.pack()
 
         times_ran = times_ran + 1
                 
