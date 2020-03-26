@@ -104,7 +104,7 @@ def ask_link():
 	download = askstring("Enter your preferred download location:", "Enter your preferred download location:")
 
 	while os.system("cd " + download) != 0:
-		download = askstring("Entered your preferred download location:", "Enter a location that exists and you have access to:")
+		download = askstring("Entered your preferred download location:", "Invalid Directory. Please enter another one:")
 	file_name = askstring("File Name? ", "File Name? ")  
 	initialize()
 	
