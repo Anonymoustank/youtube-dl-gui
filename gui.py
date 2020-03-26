@@ -5,16 +5,20 @@ import time
 from subprocess import PIPE, run
 
 def out(command):
-        
+
         result = run(command, shell=True, capture_output=True, universal_newlines=True)
 
         complete = Tk()
 
         complete.title("Download Results")
 
+        global error_label
+
         error_label = Label(complete,text=str(result.stderr))
         
         error_label.pack()
+
+        global result_label
         
         result_label = Label(complete,text=str(result.stdout))
 
@@ -22,11 +26,13 @@ def out(command):
 
         success_notify = Label(complete,text="Download completed successfully!")
 
-        print(result.returncode)
-
         if str(result.returncode) == "0":
 
                 success_notify.pack()
+
+        else:
+                error_notify = Label(complete,text="Download unsuccessful. Process exited with code " + str(result.returncode) + ".")
+                error_notify.pack()
                 
         
         
@@ -44,7 +50,7 @@ def Video_Download(): #Video formats are mp4, webm
 
 	start_button.pack()
 
-	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), error_label.destroy(), result_label.destroy(), initialize()])
+	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), initialize()])
 	
 	back_button.place(x=0,y=0)
 
@@ -61,7 +67,7 @@ def Audio_Download(): #Audio formats are mp3, m4a
 
 	start_button.pack()
 
-	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), error_label.destroy(), result_label.destroy(), initialize()])
+	back_button = Button(root, text = "Back", command = lambda:[menu.destroy(), back_button.destroy(), start_button.destroy(), initialize()])
 	
 	back_button.place(x=0,y=0)
 
