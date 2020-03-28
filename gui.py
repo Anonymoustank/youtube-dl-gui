@@ -2,13 +2,13 @@ from tkinter import *
 from tkinter.simpledialog import askstring
 from subprocess import PIPE, run
 
-def out(command):
+def out(command, video_format):
 
         result = run(command, shell=True, capture_output=True, universal_newlines=True)
 
         complete = Tk()
 
-        complete.title("Download Results")
+        complete.title("Download Results for " + file_name + "." + str(video_format))
 
         global error_label
 
@@ -44,7 +44,7 @@ def Video_Download(): #Video formats are mp4, webm
 
         menu.pack()
 
-        start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -q -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Ask quotes to download and what comes after
+        start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -q -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"", clicked.get())])
 
         start_button.pack()
 
@@ -61,7 +61,7 @@ def Audio_Download(): #Audio formats are mp3, m4a
 
         menu.pack()
 
-        start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -q -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"")]) #Add quotes to download and what comes after
+        start_button = Button(root, text = "Start Download", command = lambda:[out("youtube-dl -q -f " + clicked.get() + " " + link + " -o " + "\"" + download + "/" + file_name + "." + clicked.get() + "\"", clicked.get())]) 
 
         start_button.pack()
 
@@ -99,14 +99,14 @@ def ask_link():
 
         link = askstring("Link to the video", "Enter the link to the youtube video:")
 
-        download = askstring("Invalid location","Enter a location that exists and you have access to")
+        download = askstring("Enter the video download location","Enter the video download location")
 
         while str(run("cd " + download, shell=True, capture_output=True, universal_newlines=True).returncode) != "0":
-                download = askstring("Enter the video download location","Enter the video download location")
+                download = askstring("Invalid location","Enter a location that exists and you have access to")
                 
 
-
         file_name = askstring("File Name? ", "File Name? ")
+        
         initialize()
 
 
