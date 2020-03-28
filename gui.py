@@ -99,6 +99,9 @@ def ask_link():
 
         link = askstring("Link to the video", "Enter the link to the youtube video:")
 
+        if link == None:
+                exit()
+
         download = askstring("Enter the video download location","Enter the video download location")
 
         while str(run("cd " + download, shell=True, capture_output=True, universal_newlines=True).returncode) != "0":
