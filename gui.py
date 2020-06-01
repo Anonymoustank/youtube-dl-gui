@@ -72,7 +72,7 @@ def Audio_Download(): #Audio formats are mp3, m4a
 def initialize():
         root.title("Youtube-dl GUI")
 
-        root.geometry("600x600")
+        root.geometry("300x75")
 
         root.deiconify()
 
